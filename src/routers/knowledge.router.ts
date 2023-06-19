@@ -5,7 +5,11 @@ const router = express.Router();
 const knowledgeController = new KnowledgeController();
 
 router.get('/', async (req: Request, res: Response) => {
-    await knowledgeController.getAllKnowledge(req, res);
+    await knowledgeController.getAll(req, res);
+});
+
+router.get('/:id', async (req: Request, res: Response) => {
+    await knowledgeController.getOne(req, res);
 });
 
 

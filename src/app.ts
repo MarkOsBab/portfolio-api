@@ -7,6 +7,7 @@ import { logger } from "./utils/logger.js";
 import loggerMiddleware from "./middlewares/logger.middleware.js";
 // Routers
 import kowledgeRouter from "./routers/knowledge.router.js";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.listen(config.port, () => {
     logger.info(`Listening on port ${config.port}`);
 });
 
-app.use("/api/knowledge", kowledgeRouter);
-
 database.connect();
+app.use(errorMiddleware);
+
+app.use("/api/knowledge", kowledgeRouter);

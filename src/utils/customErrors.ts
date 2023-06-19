@@ -1,7 +1,7 @@
-export default class CustomError {
-    public static generateCustomError(name:string, message:string) {
+export class CustomError {
+    static generateCustomError({name, message}: Record<string, string>): Error {
         const customError = new Error(message);
-        customError.name = name;
+        Object.defineProperty(customError, 'name', {value: name});
         throw customError;
     }
 }

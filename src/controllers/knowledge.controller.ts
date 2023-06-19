@@ -8,12 +8,22 @@ export class KnowledgeController {
         this.service = new KnowledgeService();
     }
 
-    public async getAllKnowledge(req: Request, res: Response): Promise<void> {
+    public async getAll(req: Request, res: Response): Promise<void> {
         try {
-            const knowledge = await this.service.getAllKnowledge();
+            const knowledges = await this.service.getAll();
+            res.status(200).json(knowledges);
+        } catch (error: any) {
+            res.status(500).json({error: error.message});
+        }
+    }
+
+    public async getOne(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+            const knowledge = await this.service.getOne(id);
             res.status(200).json(knowledge);
         } catch (error: any) {
-            res.status(error.statusCode).json({error: error.message});
+            res.status(500).json({error:error.message});
         }
     }
 }
