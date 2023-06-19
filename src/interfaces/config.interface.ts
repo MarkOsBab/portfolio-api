@@ -1,7 +1,7 @@
 interface ConfigInterface {
     port: string | undefined;
     dbUrl: string | undefined;
-    appDebug: string | undefined | boolean;
+    appDebug: boolean;
 }
 
 export default ConfigInterface;

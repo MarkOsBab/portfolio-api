@@ -25,7 +25,7 @@ const developmentLogger = winston.createLogger({
     levels: customLevel.levels,
     transports: [
         new winston.transports.Console({
-            level: "debug",
+            level: "fatal",
             format: winston.format.combine(
                 winston.format.colorize({colors: customLevel.colors}),
                 winston.format.simple()
@@ -52,6 +52,6 @@ const productionLogger = winston.createLogger({
     ]
 });
 
-const logger = config.appDebug === true ? developmentLogger : productionLogger;
 
-export default logger;
+
+export const logger = config.appDebug === true ? developmentLogger : productionLogger;;

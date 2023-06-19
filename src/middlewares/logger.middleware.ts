@@ -1,9 +1,9 @@
-import logger from "../utils/logger.js";
+import { logger } from "../utils/logger.js";
 import { Request, Response, NextFunction } from "express";
 
 const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
   // Registra el inicio de la solicitud en el logger
-  logger.info(`[${req.method}] ${req.url}`);
+  logger.http(`[${req.method}] ${req.url}`);
 
   // Registra el tiempo de inicio de la solicitud
   const start = new Date().getTime();
@@ -14,7 +14,7 @@ const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const duration = new Date().getTime() - start;
 
     // Registra el final de la solicitud en el logger
-    logger.info(`[${req.method}] ${req.url} - ${res.statusCode} (${duration}ms)`);
+    logger.http(`[${req.method}] ${req.url} - ${res.statusCode} (${duration}ms)`);
   });
 
   // Llama a la siguiente función de middleware

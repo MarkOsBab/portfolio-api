@@ -18,6 +18,6 @@ const knowledgeSchema: Schema = new Schema({
     thumbnail: String
 });
 
-const knowledgeModel: Model<KnowledgeInterface> = mongoose.model<KnowledgeInterface>(knowledgeCollection, knowledgeSchema);
+const KnowledgeModel: Model<KnowledgeInterface> = mongoose.model<KnowledgeInterface>(knowledgeCollection, knowledgeSchema);
 
-export { knowledgeModel };
+export { KnowledgeModel };
