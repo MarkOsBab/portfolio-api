@@ -1,17 +1,19 @@
 import multer, {diskStorage, FileFilterCallback} from 'multer';
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import path, { dirname } from "path";
 import bcrypt from "bcrypt";
+import {v4 as uuid} from "uuid";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const storage = diskStorage({
   destination: function (req, file, cb) {
-    cb(null, `${__dirname}/public/images`);
+    cb(null, `${__dirname}/../public/images`);
   },
   filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
+    const ext = path.extname(file.originalname);
+    cb(null, uuid()+ext);
   },
 });
 

@@ -7,15 +7,26 @@ const knowledgeSchema: Schema = new Schema({
     name: {
         type: String,
         unique: true,
+        required: true,
     },
-    description: String,
+    description: {
+        type: String,
+        required: true,
+    },
     visible: {
         type: Boolean,
         enum: [0, 1],
         default: 1,
+        required: true,
     },
-    category: String,
-    thumbnail: String
+    category: {
+        type: String,
+        required: true,
+    },
+    thumbnail: {
+        type: String,
+        required: true,
+    }
 });
 
 const KnowledgeModel: Model<KnowledgeInterface> = mongoose.model<KnowledgeInterface>(knowledgeCollection, knowledgeSchema);

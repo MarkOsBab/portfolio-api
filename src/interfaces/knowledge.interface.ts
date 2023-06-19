@@ -1,7 +1,9 @@
+import VisibleEnum from "../enums/visible.enum.js";
+
 interface KnowledgeInterface {
     name: string;
     description: string;
-    visible: boolean;
+    visible: VisibleEnum;
     category: string;
     thumbnail: string;
 };

@@ -1,8 +1,8 @@
 import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
 import { KnowledgeRepository } from "../repositories/knowledge.repository.js";
-import { ErrorNames, ErrorMessages } from "../../enums/errors/knowledge.errors.js";
-
+import VisibleEnum from "../../enums/visible.enum.js";
+import { ErrorNames, ErrorMessages } from "./validations/knowledge.validation.js";
 export class KnowledgeService {
     private repository: KnowledgeRepository;
 
@@ -28,6 +28,37 @@ export class KnowledgeService {
                 });
             }
             return knowledge;
+        } catch (error: any) {
+            throw new Error(error);
+        }
+    }
+
+    public async create(knowledge: KnowledgeInterface): Promise<KnowledgeInterface> {
+        try {
+            if(!knowledge.name || !knowledge.description || !knowledge.visible || !knowledge.category || !knowledge.thumbnail) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.FIELD_VALIDATION_NAME,
+                    message: ErrorMessages.REQUIRED_MESSAGE
+                });
+            }
+            
+            if(![VisibleEnum.VISIBLE, VisibleEnum.NOT_VISIBLE].includes(Number(knowledge.visible))) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.FIELD_VALIDATION_NAME,
+                    message: ErrorMessages.VISIBLE_FIELD_FIELD_TYPE
+                });
+            }
+
+            const existingKnowledge = await this.repository.getByName(knowledge.name);
+
+            if (existingKnowledge) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.FIELD_VALIDATION_NAME,
+                    message: ErrorMessages.NAME_ALREADY_EXISTS_MESSAGE
+                });
+            }
+            
+            return this.repository.create(knowledge);
         } catch (error: any) {
             throw new Error(error);
         }

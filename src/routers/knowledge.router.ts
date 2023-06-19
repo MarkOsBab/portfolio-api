@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { KnowledgeController } from "../controllers/knowledge.controller.js";
+import { uploader } from "../utils/utils.js";
 
 const router = express.Router();
 const knowledgeController = new KnowledgeController();
@@ -12,5 +13,8 @@ router.get('/:id', async (req: Request, res: Response) => {
     await knowledgeController.getOne(req, res);
 });
 
+router.post('/', uploader.single('thumbnail'), async(req: Request, res: Response) => {
+    await knowledgeController.create(req, res);
+});
 
 export default router;

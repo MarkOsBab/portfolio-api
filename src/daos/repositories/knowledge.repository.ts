@@ -2,7 +2,7 @@ import mongoose, { Model } from "mongoose";
 import { KnowledgeModel } from "../models/knowledge.model.js";
 import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
-import { ErrorNames, ErrorMessages } from "../../enums/errors/knowledge.errors.js";
+import { ErrorNames, ErrorMessages } from "../services/validations/knowledge.validation.js";
 
 export class KnowledgeRepository {
     private model: Model<KnowledgeInterface>;
@@ -29,6 +29,22 @@ export class KnowledgeRepository {
             }
             return await this.model.findById(id);
         } catch(error: any) {
+            throw error;
+        }
+    }
+
+    public async create(knowledge: KnowledgeInterface): Promise<KnowledgeInterface> {
+        try {
+            return await this.model.create(knowledge);
+        } catch (error: any) {
+            throw error;
+        }
+    }
+
+    public async getByName(name: string): Promise<KnowledgeInterface | null> {
+        try {
+            return await this.model.findOne({name});
+        } catch (error: any) {
             throw error;
         }
     }
