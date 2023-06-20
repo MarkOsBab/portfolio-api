@@ -47,4 +47,29 @@ export class KnowledgeController {
             res.status(500).json({error:error.message});
         }
     }
+
+    public async update(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+            const data = req.body;
+            
+            const knowledge = await this.service.update(id, data);
+
+            res.status(200).json({knowledge});
+        } catch (error: any) {
+            res.status(500).json({error:error.message});
+        }
+    }
+
+    public async delete(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+
+            const knowledge = await this.service.delete(id);
+
+            res.status(200).json({knowledge});
+        } catch (error: any) {
+            res.status(500).json({error: error.message});
+        }
+    }
 }

@@ -48,4 +48,20 @@ export class KnowledgeRepository {
             throw error;
         }
     }
+
+    public async update(id:string, knowledge: KnowledgeInterface): Promise<KnowledgeInterface | null> {
+        try {
+            return await this.model.findByIdAndUpdate(id, knowledge, { new:true });
+        } catch (error: any) {
+            throw error;
+        }
+    };
+
+    public async delete(id: string): Promise<KnowledgeInterface | null> {
+        try {
+            return await this.model.findByIdAndDelete(id, { new:true });
+        } catch (error: any) {
+            throw error;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 import mongoose, { Model, Schema } from "mongoose";
 import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
+import uniqueValidator from 'mongoose-unique-validator';
 
 const knowledgeCollection: string = "knowledge";
 
@@ -7,7 +8,7 @@ const knowledgeSchema: Schema = new Schema({
     name: {
         type: String,
         unique: true,
-        required: true,
+        required: true
     },
     description: {
         type: String,
@@ -28,6 +29,8 @@ const knowledgeSchema: Schema = new Schema({
         required: true,
     }
 });
+
+knowledgeSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' });
 
 const KnowledgeModel: Model<KnowledgeInterface> = mongoose.model<KnowledgeInterface>(knowledgeCollection, knowledgeSchema);
 

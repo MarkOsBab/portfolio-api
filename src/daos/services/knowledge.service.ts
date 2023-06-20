@@ -63,4 +63,62 @@ export class KnowledgeService {
             throw new Error(error);
         }
     }
+
+    public async update(id: string, knowledge: KnowledgeInterface): Promise<KnowledgeInterface | null> {
+        try {
+            const knowledgeToUpdate = await this.repository.getOne(id);
+            
+            if(!knowledgeToUpdate) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.NOT_FOUND_NAME,
+                    message: ErrorMessages.NOT_FOUND_MESSAGE
+                });
+            }
+            
+
+            if(!knowledge.name || !knowledge.description || !knowledge.visible || !knowledge.category) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.FIELD_VALIDATION_NAME,
+                    message: ErrorMessages.REQUIRED_MESSAGE
+                });
+            }
+            
+            if(![VisibleEnum.VISIBLE, VisibleEnum.NOT_VISIBLE].includes(Number(knowledge.visible))) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.FIELD_VALIDATION_NAME,
+                    message: ErrorMessages.VISIBLE_FIELD_FIELD_TYPE
+                });
+            }
+            
+            const existingKnowledgeName = await this.repository.getByName(knowledge.name);
+
+            if (existingKnowledgeName) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.FIELD_VALIDATION_NAME,
+                    message: ErrorMessages.NAME_ALREADY_EXISTS_MESSAGE
+                });
+            }
+
+            return await this.repository.update(id, knowledge);
+
+        } catch (error: any) {
+            throw new Error(error);
+        }
+    }
+
+    public async delete(id: string): Promise<KnowledgeInterface | null> {
+        try {
+            const knowladgeExists = await this.repository.getOne(id);
+            if(!knowladgeExists) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.NOT_FOUND_NAME,
+                    message: ErrorMessages.NOT_FOUND_MESSAGE
+                });
+            }
+
+            return await this.repository.delete(id);
+        } catch (error: any) {
+            throw new Error(error);
+        }
+    }
 }

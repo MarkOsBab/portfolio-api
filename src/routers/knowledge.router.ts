@@ -17,4 +17,12 @@ router.post('/', uploader.single('thumbnail'), async(req: Request, res: Response
     await knowledgeController.create(req, res);
 });
 
+router.put('/:id', async (req: Request, res: Response) => {
+    await knowledgeController.update(req, res);
+});
+
+router.delete('/:id', async (req: Request, res: Response) => {
+    await knowledgeController.delete(req, res);
+});
+
 export default router;
