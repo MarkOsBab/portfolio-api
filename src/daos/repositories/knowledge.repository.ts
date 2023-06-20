@@ -11,9 +11,10 @@ export class KnowledgeRepository {
         this.model = KnowledgeModel;
     }
 
-    public async getAll(): Promise<KnowledgeInterface[]> {
+    public async getAll(category?: string): Promise<KnowledgeInterface[]> {
         try {
-            return await this.model.find();
+            const filter = category ? { category } : {};
+            return await this.model.find(filter);
         } catch(error: any) {
             throw error
         }

@@ -3,6 +3,8 @@ import { CustomError } from "../../utils/customErrors.js";
 import { KnowledgeRepository } from "../repositories/knowledge.repository.js";
 import VisibleEnum from "../../enums/visible.enum.js";
 import { ErrorNames, ErrorMessages } from "./validations/knowledge.validation.js";
+import { validationResult } from "express-validator";
+
 export class KnowledgeService {
     private repository: KnowledgeRepository;
 
@@ -10,9 +12,9 @@ export class KnowledgeService {
         this.repository = new KnowledgeRepository();
     }
 
-    public async getAll(): Promise<KnowledgeInterface[]> {
+    public async getAll(category?: string): Promise<KnowledgeInterface[]> {
         try {
-            return await this.repository.getAll();
+            return await this.repository.getAll(category);
         } catch(error: any) {
             throw new Error(error);
         }
@@ -35,20 +37,6 @@ export class KnowledgeService {
 
     public async create(knowledge: KnowledgeInterface): Promise<KnowledgeInterface> {
         try {
-            if(!knowledge.name || !knowledge.description || !knowledge.visible || !knowledge.category || !knowledge.thumbnail) {
-                CustomError.generateCustomError({
-                    name: ErrorNames.FIELD_VALIDATION_NAME,
-                    message: ErrorMessages.REQUIRED_MESSAGE
-                });
-            }
-            
-            if(![VisibleEnum.VISIBLE, VisibleEnum.NOT_VISIBLE].includes(Number(knowledge.visible))) {
-                CustomError.generateCustomError({
-                    name: ErrorNames.FIELD_VALIDATION_NAME,
-                    message: ErrorMessages.VISIBLE_FIELD_FIELD_TYPE
-                });
-            }
-
             const existingKnowledge = await this.repository.getByName(knowledge.name);
 
             if (existingKnowledge) {
@@ -72,21 +60,6 @@ export class KnowledgeService {
                 CustomError.generateCustomError({
                     name: ErrorNames.NOT_FOUND_NAME,
                     message: ErrorMessages.NOT_FOUND_MESSAGE
-                });
-            }
-            
-
-            if(!knowledge.name || !knowledge.description || !knowledge.visible || !knowledge.category) {
-                CustomError.generateCustomError({
-                    name: ErrorNames.FIELD_VALIDATION_NAME,
-                    message: ErrorMessages.REQUIRED_MESSAGE
-                });
-            }
-            
-            if(![VisibleEnum.VISIBLE, VisibleEnum.NOT_VISIBLE].includes(Number(knowledge.visible))) {
-                CustomError.generateCustomError({
-                    name: ErrorNames.FIELD_VALIDATION_NAME,
-                    message: ErrorMessages.VISIBLE_FIELD_FIELD_TYPE
                 });
             }
             

@@ -13,8 +13,12 @@ router.get('/:id', async (req: Request, res: Response) => {
     await knowledgeController.getOne(req, res);
 });
 
-router.post('/', uploader.single('thumbnail'), async(req: Request, res: Response) => {
-    await knowledgeController.create(req, res);
+router.post('/', uploader.single("thumbnail"), async(req: Request, res: Response) => {
+    try {
+        await knowledgeController.create(req, res);
+    } catch (error: any) {
+        throw Error(error.message);
+    }
 });
 
 router.put('/:id', async (req: Request, res: Response) => {
