@@ -1,9 +1,7 @@
 import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
 import { KnowledgeRepository } from "../repositories/knowledge.repository.js";
-import VisibleEnum from "../../enums/visible.enum.js";
 import { ErrorNames, ErrorMessages } from "./validations/knowledge.validation.js";
-import { validationResult } from "express-validator";
 
 export class KnowledgeService {
     private repository: KnowledgeRepository;

@@ -5,9 +5,10 @@ import database from "./utils/database.js";
 import { logger } from "./utils/logger.js";
 // Middlewares
 import loggerMiddleware from "./middlewares/logger.middleware.js";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
 // Routers
 import kowledgeRouter from "./routers/knowledge.router.js";
-import { errorMiddleware } from "./middlewares/error.middleware.js";
+import projectRouter from "./routers/project.router.js";
 
 const app = express();
 
@@ -23,3 +24,4 @@ database.connect();
 app.use(errorMiddleware);
 
 app.use("/api/knowledge", kowledgeRouter);
+app.use("/api/projects", projectRouter);

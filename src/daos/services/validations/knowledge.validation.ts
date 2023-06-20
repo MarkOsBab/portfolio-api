@@ -8,6 +8,7 @@ const ErrorMessages: Record<string, string> = {
     NOT_FOUND_MESSAGE: "Knowledge not found",
     REQUIRED_MESSAGE: "All fields are required",
     NAME_ALREADY_EXISTS_MESSAGE: "Name already exists",
+    ID_NOT_VALID_MESSAGE: "The ID is not valid",
 }
 
 export { ErrorNames, ErrorMessages };
