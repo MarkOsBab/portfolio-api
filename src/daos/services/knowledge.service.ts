@@ -78,7 +78,10 @@ export class KnowledgeService {
             if (knowledge.thumbnail && knowledgeToUpdate?.thumbnail) {
                 const thumbnailFileName = path.basename(knowledgeToUpdate.thumbnail);
                 const thumbnailPath = path.resolve(__dirname, '../public/images', thumbnailFileName);
-                fs.unlinkSync(thumbnailPath);
+                const existingFile = fs.existsSync(thumbnailPath);
+                if(existingFile) {
+                    fs.unlinkSync(thumbnailPath);
+                }
             }
 
             return await this.repository.update(id, knowledge);
@@ -100,7 +103,10 @@ export class KnowledgeService {
             if (knowladgeExists && knowladgeExists.thumbnail) {
                 const thumbnailFileName = path.basename(knowladgeExists.thumbnail);
                 const thumbnailPath = path.resolve(__dirname, '../public/images', thumbnailFileName);
-                fs.unlinkSync(thumbnailPath);
+                const existingFile = fs.existsSync(thumbnailPath);
+                if(existingFile) {
+                    fs.unlinkSync(thumbnailPath);
+                }
             }
 
             return await this.repository.delete(id);

@@ -41,4 +41,20 @@ export class ProjectRepository {
             throw error;
         }
     }
+
+    public async update(id: string, project: ProjectInterface): Promise<ProjectInterface | null> {
+        try {
+            return await this.model.findByIdAndUpdate(id, project, { new: true });
+        } catch (error: any) {
+            throw error;
+        }
+    }
+
+    public async delete(id: string): Promise<ProjectInterface | null> {
+        try {
+            return await this.model.findByIdAndDelete(id);
+        } catch (error: any) {
+            throw error;
+        }
+    }
 }

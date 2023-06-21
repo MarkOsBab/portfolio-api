@@ -71,4 +71,63 @@ export class ProjectController {
             res.status(500).json({error: error.message});
         }
     }
+
+    public async update(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+            const data = req.body;
+        
+            let updatedProject;
+        
+            if (req.files && Array.isArray(req.files)) {
+                const thumbnails = req.files.map((file: Express.Multer.File) => `${this.URL}${file.filename}`);
+                data.thumbnails = thumbnails;
+            }
+        
+            await Promise.all(createProjectValidations.map((validation) => validation.run(req)));
+            const errors = validationResult(req);
+        
+            if (!errors.isEmpty()) {
+                if (req.files && Array.isArray(req.files)) {
+                    req.files.forEach((file: Express.Multer.File) => {
+                        fs.unlinkSync(file.path);
+                    });
+                }
+                res.status(400).json({ error: errors.array() });
+                return;
+            }
+
+            if (req.body.links) {
+                const links = JSON.parse(req.body.links);
+                data.links = links;
+            }
+        
+            try {
+                updatedProject = await this.service.update(id, data);
+            } catch (error) {
+                if (req.files && Array.isArray(req.files)) {
+                    req.files.forEach((file: Express.Multer.File) => {
+                        fs.unlinkSync(file.path);
+                    });
+                }
+                throw error;
+            }
+
+            res.status(200).json(updatedProject);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    public async delete(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+            const project = await this.service.delete(id);
+
+            res.status(200).json(project);
+        } catch (error: any) {
+            res.status(500).json({error: error.message});
+        }
+    }
+      
 }

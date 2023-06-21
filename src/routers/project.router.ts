@@ -17,4 +17,12 @@ router.post('/', uploader.array('thumbnails'), async (req:Request, res: Response
     await projectController.create(req, res);
 });
 
+router.put('/:id', uploader.array('thumbnails'), async (req:Request, res: Response) => {
+    await projectController.update(req, res);
+});
+
+router.delete('/:id', async (req: Request, res: Response) => {
+    await projectController.delete(req, res);
+});
+
 export default router;
