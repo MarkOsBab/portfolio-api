@@ -1,7 +1,10 @@
+import path from "path";
 import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
 import { KnowledgeRepository } from "../repositories/knowledge.repository.js";
 import { ErrorNames, ErrorMessages } from "./validations/knowledge.validation.js";
+import fs from "fs";
+import __dirname from "../../utils/utils.js";
 
 export class KnowledgeService {
     private repository: KnowledgeRepository;
@@ -61,17 +64,24 @@ export class KnowledgeService {
                 });
             }
             
-            const existingKnowledgeName = await this.repository.getByName(knowledge.name);
-
-            if (existingKnowledgeName) {
-                CustomError.generateCustomError({
+            if (knowledgeToUpdate && knowledge.name !== knowledgeToUpdate.name) {
+                const existingKnowledgeName = await this.repository.getByName(knowledge.name);
+          
+                if (existingKnowledgeName) {
+                  CustomError.generateCustomError({
                     name: ErrorNames.FIELD_VALIDATION_NAME,
-                    message: ErrorMessages.NAME_ALREADY_EXISTS_MESSAGE
-                });
+                    message: ErrorMessages.NAME_ALREADY_EXISTS_MESSAGE,
+                  });
+                }
+            }
+
+            if (knowledge.thumbnail && knowledgeToUpdate?.thumbnail) {
+                const thumbnailFileName = path.basename(knowledgeToUpdate.thumbnail);
+                const thumbnailPath = path.resolve(__dirname, '../public/images', thumbnailFileName);
+                fs.unlinkSync(thumbnailPath);
             }
 
             return await this.repository.update(id, knowledge);
-
         } catch (error: any) {
             throw new Error(error);
         }
@@ -85,6 +95,12 @@ export class KnowledgeService {
                     name: ErrorNames.NOT_FOUND_NAME,
                     message: ErrorMessages.NOT_FOUND_MESSAGE
                 });
+            }
+
+            if (knowladgeExists && knowladgeExists.thumbnail) {
+                const thumbnailFileName = path.basename(knowladgeExists.thumbnail);
+                const thumbnailPath = path.resolve(__dirname, '../public/images', thumbnailFileName);
+                fs.unlinkSync(thumbnailPath);
             }
 
             return await this.repository.delete(id);

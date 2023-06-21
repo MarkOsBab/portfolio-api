@@ -37,8 +37,6 @@ export class ProjectController {
             await Promise.all(createProjectValidations.map((validation) => validation.run(req)));
             const errors = validationResult(req);
 
-            console.log(req.body.links)
-
             if (!req.files || !errors.isEmpty()) {
                 if (!req.files || !Array.isArray(req.files)) {
                     res.status(400).json({ error: "Files not found" });

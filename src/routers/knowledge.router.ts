@@ -21,7 +21,7 @@ router.post('/', uploader.single("thumbnail"), async(req: Request, res: Response
     }
 });
 
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', uploader.single("thumbnail"), async (req: Request, res: Response) => {
     await knowledgeController.update(req, res);
 });
 

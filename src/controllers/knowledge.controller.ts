@@ -69,10 +69,28 @@ export class KnowledgeController {
         try {
             const { id } = req.params;
             const data = req.body;
-            
-            const knowledge = await this.service.update(id, data);
+            const thumbnail = `${this.URL}${req.file?.filename}`;
+            data.thumbnail = thumbnail;
 
-            res.status(200).json({knowledge});
+            await Promise.all(createKnowledgeValidations.map((validation) => validation.run(req)));
+            const errors = validationResult(req);
+            
+            if (!errors.isEmpty()) {
+                res.status(400).json({ error: errors.array() });
+                return;
+            }
+
+            let updatedKnowledge;
+            try {
+                updatedKnowledge = await this.service.update(id, data);
+            } catch (error) {
+                if (req.file) {
+                    fs.unlinkSync(req.file.path);
+                }
+                throw error;
+            }
+
+            res.status(200).json({updatedKnowledge});
         } catch (error: any) {
             res.status(500).json({error:error.message});
         }
@@ -83,7 +101,6 @@ export class KnowledgeController {
             const { id } = req.params;
 
             const knowledge = await this.service.delete(id);
-
             res.status(200).json({knowledge});
         } catch (error: any) {
             res.status(500).json({error: error.message});
