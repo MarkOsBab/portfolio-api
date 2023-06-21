@@ -9,6 +9,7 @@ import { errorMiddleware } from "./middlewares/error.middleware.js";
 // Routers
 import kowledgeRouter from "./routers/knowledge.router.js";
 import projectRouter from "./routers/project.router.js";
+import socialRouter from "./routers/social.router.js";
 
 const app = express();
 
@@ -25,3 +26,4 @@ app.use(errorMiddleware);
 
 app.use("/api/knowledge", kowledgeRouter);
 app.use("/api/projects", projectRouter);
+app.use("/api/socials", socialRouter);

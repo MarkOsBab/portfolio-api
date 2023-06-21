@@ -59,7 +59,7 @@ export class KnowledgeController {
             throw error;
           }
       
-          res.status(201).json(createdKnowledge);
+          res.status(200).json(createdKnowledge);
         } catch (error: any) {
           res.status(500).json({ error: error.message });
         }
