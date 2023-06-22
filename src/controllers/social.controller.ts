@@ -35,7 +35,7 @@ export class SocialController {
             const errors = validationResult(req);
             if(!errors.isEmpty()) {
                 res.status(400).json({error: errors.array()});
-                return
+                return;
             }
             const data = req.body;
             const social = await this.service.create(data);

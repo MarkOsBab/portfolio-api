@@ -62,7 +62,7 @@ export class SocialService {
             if(!existingSocial) {
                 CustomError.generateCustomError({
                     name: ErrorNames.NOT_FOUND_NAME,
-                    message: ErrorMessages.NOT_FOUND_MESSAGE
+                    message: ErrorMessages.EMAIL_ALREADY_REGISTRED
                 });
             }
             return await this.repository.delete(id);

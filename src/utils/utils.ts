@@ -3,6 +3,9 @@ import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import bcrypt from "bcrypt";
 import {v4 as uuid} from "uuid";
+import jwt from "jsonwebtoken";
+import secretKey from './config.js';
+import UserInterface from '../interfaces/user.interface.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
