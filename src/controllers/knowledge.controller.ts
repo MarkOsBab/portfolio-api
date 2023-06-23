@@ -17,7 +17,7 @@ export class KnowledgeController {
     public async getAll(req: Request, res: Response): Promise<void> {
         try {
             const { category } = req.query;
-            const knowledges = await this.service.getAll(category as string);
+            const knowledges = await this.service.getAll(category as string);            
             res.status(200).json(knowledges);
         } catch (error: any) {
             res.status(500).json({error: error.message});

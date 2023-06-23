@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express"
 import passport from "passport"
 import UserInterface from "../interfaces/user.interface.js";
 
-export const passportMiddleware = (strategy: string) => {
+export const registerMiddleware = (strategy: string) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         passport.authenticate(strategy, (error: any, user: UserInterface) => {
             if(error) {

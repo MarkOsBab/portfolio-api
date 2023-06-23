@@ -41,4 +41,12 @@ export class UserRepository {
         }
     }
     
+    public async findByUsernameAndPassword(username: String, password: String): Promise<UserInterface | null | undefined> {
+        try {
+            return await this.model.findOne({username, password});
+        } catch (error: any) {
+            throw error;
+        }
+    }
+    
 }

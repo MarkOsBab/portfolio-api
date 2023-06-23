@@ -1,5 +1,6 @@
 import { SocialController } from "../controllers/social.controller.js";
 import express, { Request, Response } from "express";
+import { authToken } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 const socialController = new SocialController();
@@ -12,15 +13,15 @@ router.get('/:id', async (req: Request, res: Response) => {
     await socialController.getOne(req, res);
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', authToken(), async (req: Request, res: Response) => {
     await socialController.create(req, res);
 });
 
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', authToken(), async (req: Request, res: Response) => {
     await socialController.update(req, res);
 });
 
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', authToken(), async (req: Request, res: Response) => {
     await socialController.delete(req, res);
 });
 

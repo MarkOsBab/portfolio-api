@@ -2,6 +2,7 @@ import { UserRepository } from "../repositories/user.repository.js";
 import UserInterface from "../../interfaces/user.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
 import { ErrorMessages, ErrorNames } from "./validations/user.validation.js";
+import { isValidPassword } from "../../utils/utils.js";
 
 export class UserService {
     private repository: UserRepository;
@@ -48,4 +49,30 @@ export class UserService {
             throw new Error(error);
         }
     }
+
+    public async findByUsernameAndPassword(username: string, password: string): Promise<UserInterface | null | undefined> {
+        try {
+            const getUser = await this.repository.findByUsername(username);
+    
+            if (!getUser) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.NOT_FOUND_NAME,
+                    message: ErrorMessages.NOT_FOUND_MESSAGE
+                });
+            }
+    
+            const isValid = isValidPassword(getUser, password);
+    
+            if (isValid) {
+                return getUser;
+            } else {
+                CustomError.generateCustomError({
+                    name: ErrorNames.INVALID_CREDENTIALS_NAME,
+                    message: ErrorMessages.INVALID_CREDENTIALS_MESSAGE
+                });
+            }
+        } catch (error: any) {
+            throw new Error(error);
+        }
+    }    
 }

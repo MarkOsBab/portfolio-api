@@ -1,16 +1,15 @@
 import passport from "passport";
-import { createHash } from "../utils/utils.js";
 import { Strategy as LocalStrategy } from "passport-local";
-import secretKey from "../utils/config.js";
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+import { createHash } from "../utils/utils.js";
+import config from "../utils/config.js";
 import { UserService } from "../daos/services/user.service.js";
 import UserInterface from "../interfaces/user.interface.js";
-import { createUserValidation } from "../controllers/validations/user.validation.js";
-import { validationMiddleware } from "../middlewares/validation.middleware.js";
 import { UserModel } from "../daos/models/user.model.js";
 
 export class AuthMiddleware {
     private service: UserService;
-    private secretKey = secretKey;
+    private secretKey = config.secretKey;
 
     constructor(){
         this.service = new UserService();
@@ -55,6 +54,28 @@ export class AuthMiddleware {
                 }
             )
         );
+
+        passport.use(
+            "jwt",
+            new JwtStrategy(
+                {
+                    secretOrKey: this.secretKey,
+                    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+                },
+                async (jwtPayload: any, done: any) => {
+                    try {
+                        const user = await this.service.findById(jwtPayload.userId);
+                        if(user) {
+                            return done(null, user);
+                        } else {
+                            throw new Error(`User not found`);
+                        }
+                    } catch (error: any) {
+                        return done(error, false);
+                    }
+                }
+            )
+        )
 
         passport.serializeUser((user, done) => {
             done(null, user);

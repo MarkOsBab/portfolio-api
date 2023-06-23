@@ -3,9 +3,10 @@ import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import bcrypt from "bcrypt";
 import {v4 as uuid} from "uuid";
-import jwt from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import secretKey from './config.js';
 import UserInterface from '../interfaces/user.interface.js';
+import config from './config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,5 +27,10 @@ export default __dirname;
 export const createHash = (password: string): string => 
   bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
-export const isValidPassword = (user: any, password: string): boolean => 
-  bcrypt.compareSync(password, user.password);
+export const isValidPassword = (user: UserInterface | null, password: string): boolean => 
+  bcrypt.compareSync(password, user?.password as string);
+
+export const generateToken = (user: UserInterface, expiresIn: string) => {
+  const token = jwt.sign({ user }, config.secretKey as Secret, { expiresIn });
+  return token;
+} 

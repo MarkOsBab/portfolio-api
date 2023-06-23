@@ -15,6 +15,7 @@ import kowledgeRouter from "./routers/knowledge.router.js";
 import projectRouter from "./routers/project.router.js";
 import socialRouter from "./routers/social.router.js";
 import userRouter from "./routers/user.router.js";
+import authRouter from "./routers/auth.router.js";
 
 const app = express();
 const authMiddleware = new AuthMiddleware();
@@ -48,3 +49,4 @@ app.use("/api/knowledge", kowledgeRouter);
 app.use("/api/projects", projectRouter);
 app.use("/api/socials", socialRouter);
 app.use("/api/users", userRouter);
+app.use("/api/auth/", authRouter);
