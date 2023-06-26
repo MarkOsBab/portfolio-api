@@ -8,7 +8,7 @@ import { authToken } from "../middlewares/auth.middleware.js";
 const router = express.Router();
 const userController = new UserController();
 
-router.post('/register', authToken(), validationMiddleware(createUserValidation), registerMiddleware("register"), async (req: Request, res: Response) => {
+router.post('/register', authToken(), validationMiddleware(createUserValidation), async (req: Request, res: Response) => {
     await userController.create(req, res);
 });
 

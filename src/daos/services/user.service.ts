@@ -2,7 +2,7 @@ import { UserRepository } from "../repositories/user.repository.js";
 import UserInterface from "../../interfaces/user.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
 import { ErrorMessages, ErrorNames } from "./validations/user.validation.js";
-import { isValidPassword } from "../../utils/utils.js";
+import { createHash, isValidPassword } from "../../utils/utils.js";
 
 export class UserService {
     private repository: UserRepository;
@@ -29,6 +29,7 @@ export class UserService {
     public async create(user: UserInterface): Promise<UserInterface> {
         try {           
             const existingEmail = await this.repository.findByEmail(user.email);
+            
             if(existingEmail) {
                 CustomError.generateCustomError({
                     name: ErrorNames.GENERAL_ERROR_NAME,
@@ -43,8 +44,16 @@ export class UserService {
                     message: ErrorMessages.USERNAME_ALREADY_REGISTRED
                 });
             }
+
+            const data = {
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                password: createHash(user.password as string),
+                username: user.username
+            };
             
-            return await this.repository.create(user);
+            return await this.repository.create(data);
         } catch (error: any) {
             throw new Error(error);
         }
