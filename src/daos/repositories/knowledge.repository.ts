@@ -2,7 +2,7 @@ import mongoose, { Model } from "mongoose";
 import { KnowledgeModel } from "../models/knowledge.model.js";
 import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
-import { ErrorNames, ErrorMessages } from "../services/validations/knowledge.validation.js";
+import { ErrorNames, ErrorMessages } from "./../../enums/knowledge.enum.js";
 
 export class KnowledgeRepository {
     private model: Model<KnowledgeInterface>;

@@ -2,7 +2,7 @@ import { SocialModel } from "../models/social.model.js";
 import Socialinterface from "../../interfaces/social.interface.js";
 import mongoose, { Model } from "mongoose";
 import { CustomError } from "../../utils/customErrors.js";
-import { ErrorMessages, ErrorNames } from "../services/validations/social.validation.js";
+import { ErrorMessages, ErrorNames } from "./../../enums/social.enum.js";
 
 export class SocialRepository {
     private model: Model<Socialinterface>;

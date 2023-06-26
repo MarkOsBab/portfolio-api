@@ -1,7 +1,7 @@
 import { SocialRepository } from "../repositories/social.repository.js";
 import Socialinterface from "../../interfaces/social.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
-import { ErrorMessages, ErrorNames } from "./validations/social.validation.js";
+import { ErrorMessages, ErrorNames } from "./../../enums/social.enum.js";
 
 export class SocialService {
     private repository: SocialRepository;

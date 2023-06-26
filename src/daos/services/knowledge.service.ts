@@ -2,7 +2,7 @@ import path from "path";
 import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
 import { KnowledgeRepository } from "../repositories/knowledge.repository.js";
-import { ErrorNames, ErrorMessages } from "./validations/knowledge.validation.js";
+import { ErrorNames, ErrorMessages } from "./../../enums/knowledge.enum.js";
 import fs from "fs";
 import __dirname from "../../utils/utils.js";
 

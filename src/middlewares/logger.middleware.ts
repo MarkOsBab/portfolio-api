@@ -1,7 +1,7 @@
 import { logger } from "../utils/logger.js";
 import { Request, Response, NextFunction } from "express";
 
-const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
   logger.http(`[${req.method}] ${req.url}`);
 
   const start = new Date().getTime();
@@ -14,5 +14,3 @@ const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
   next();
 };
-
-export default loggerMiddleware;

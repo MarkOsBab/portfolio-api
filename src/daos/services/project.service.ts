@@ -3,7 +3,7 @@ import path from "path";
 import ProjectInterface from "../../interfaces/project.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
 import { ProjectRepository } from "../repositories/project.repository.js";
-import { ErrorMessages, ErrorNames } from "./validations/project.validation.js";
+import { ErrorMessages, ErrorNames } from "./../../enums/project.enum.js";
 import __dirname from "../../utils/utils.js";
 
 export class ProjectService {

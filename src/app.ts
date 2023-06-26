@@ -4,7 +4,7 @@ import config from "./utils/config.js";
 import database from "./utils/database.js";
 import { logger } from "./utils/logger.js";
 // Middlewares
-import loggerMiddleware from "./middlewares/logger.middleware.js";
+import { loggerMiddleware } from "./middlewares/logger.middleware.js";
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 // Routers
 import kowledgeRouter from "./routers/knowledge.router.js";

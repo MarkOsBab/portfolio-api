@@ -1,7 +1,7 @@
 import { UserRepository } from "../repositories/user.repository.js";
 import UserInterface from "../../interfaces/user.interface.js";
 import { CustomError } from "../../utils/customErrors.js";
-import { ErrorMessages, ErrorNames } from "./validations/user.validation.js";
+import { ErrorMessages, ErrorNames } from "./../../enums/user.enum.js";
 import { createHash, isValidPassword } from "../../utils/utils.js";
 
 export class UserService {
