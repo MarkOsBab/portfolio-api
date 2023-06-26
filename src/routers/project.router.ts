@@ -2,6 +2,8 @@ import { ProjectController } from "../controllers/project.controller.js";
 import express, { Request, Response }  from "express";
 import { uploader } from "../utils/utils.js";
 import { authToken } from "../middlewares/auth.middleware.js";
+import { validationMiddleware } from "../middlewares/validation.middleware.js";
+import { createProjectValidations } from "../controllers/validations/project.validation.js";
 
 const router = express.Router();
 const projectController = new ProjectController();
@@ -14,11 +16,11 @@ router.get('/:id', async (req: Request, res: Response) => {
     await projectController.getOne(req, res);
 });
 
-router.post('/', authToken(), uploader.array('thumbnails'), async (req:Request, res: Response) => {
+router.post('/', authToken(), uploader.array('thumbnails'), validationMiddleware(createProjectValidations), async (req:Request, res: Response) => {
     await projectController.create(req, res);
 });
 
-router.put('/:id', authToken(), uploader.array('thumbnails'), async (req:Request, res: Response) => {
+router.put('/:id', authToken(), uploader.array('thumbnails'), validationMiddleware(createProjectValidations), async (req:Request, res: Response) => {
     await projectController.update(req, res);
 });
 

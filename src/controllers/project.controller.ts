@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { ProjectService } from "../daos/services/project.service.js";
-import { validationResult } from 'express-validator';
-import { createProjectValidations } from "./validations/project.validation.js";
 
 import fs from "fs";
 import config from "../utils/config.js";
@@ -34,21 +32,14 @@ export class ProjectController {
 
     public async create(req: Request, res: Response): Promise<void> {
         try {
-            await Promise.all(createProjectValidations.map((validation) => validation.run(req)));
-            const errors = validationResult(req);
-
-            if (!req.files || !errors.isEmpty()) {
-                if (!req.files || !Array.isArray(req.files)) {
-                    res.status(400).json({ error: "Files not found" });
-                    return;
-                }
-                res.status(400).json({ error: errors.array() });
+           
+            if(req.files && !req.files.length) {
+                res.status(400).json({ error: "Files not found" });
                 return;
             }
 
             const data = req.body;
-            const links = JSON.parse(req.body.links);
-            data.links = links;
+            data.links = JSON.parse(req.body.links);
             if(req.files && Array.isArray(req.files)) {
                 const thumbnails = req.files ? req.files.map((file: Express.Multer.File) => `${this.URL}${file.filename}`): null;
                 data.thumbnails = thumbnails;
@@ -76,30 +67,13 @@ export class ProjectController {
         try {
             const { id } = req.params;
             const data = req.body;
+            data.links = JSON.parse(req.body.links);
         
             let updatedProject;
         
-            if (req.files && Array.isArray(req.files)) {
+            if (req.files && Array.isArray(req.files) && req.files.length) {
                 const thumbnails = req.files.map((file: Express.Multer.File) => `${this.URL}${file.filename}`);
                 data.thumbnails = thumbnails;
-            }
-        
-            await Promise.all(createProjectValidations.map((validation) => validation.run(req)));
-            const errors = validationResult(req);
-        
-            if (!errors.isEmpty()) {
-                if (req.files && Array.isArray(req.files)) {
-                    req.files.forEach((file: Express.Multer.File) => {
-                        fs.unlinkSync(file.path);
-                    });
-                }
-                res.status(400).json({ error: errors.array() });
-                return;
-            }
-
-            if (req.body.links) {
-                const links = JSON.parse(req.body.links);
-                data.links = links;
             }
         
             try {

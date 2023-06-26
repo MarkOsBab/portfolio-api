@@ -14,27 +14,25 @@ export class AuthController {
         try {
             const { username, password } = req.body;
             const user = await this.service.findByUsernameAndPassword(username, password);
-
-            if(!user) {
-                throw new Error("User not found");
-            }
-            const isValid = isValidPassword(user, password);
-
-            if(isValid) {
-                const accessToken = generateToken(user, this.tokenExpiresIn);
-                res.status(200).json({
-                    user: {
-                        firstname: user.firstname,
-                        lastname: user.lastname,
-                        username: user.username,
-                        email: user.email,
-                    },
-                    accessToken: accessToken, 
-                    expiresIn: this.tokenExpiresIn
-                });
-            } else {
-                res.status(400).send({error: "Invalid credentials"});
-            }
+            
+            if(user) {
+                const isValid = isValidPassword(user, password);
+                if(isValid) {
+                    const accessToken = generateToken(user, this.tokenExpiresIn);
+                    res.status(200).json({
+                        user: {
+                            firstname: user.firstname,
+                            lastname: user.lastname,
+                            username: user.username,
+                            email: user.email,
+                        },
+                        accessToken: accessToken, 
+                        expiresIn: this.tokenExpiresIn
+                    });
+                } else {
+                    res.status(400).send({error: "Invalid credentials"});
+                }
+            } 
         } catch (error: any) {
             res.status(500).json({error: error.message});
         }

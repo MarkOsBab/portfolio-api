@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserService } from "../daos/services/user.service.js";
-import { generateToken, isValidPassword } from "../utils/utils.js";
+import { generateToken } from "../utils/utils.js";
 
 export class UserController {
     private service: UserService;
@@ -8,7 +8,6 @@ export class UserController {
 
     constructor(){
         this.service = new UserService();
-        
     }
 
     public async create(req: Request, res: Response): Promise<void> {

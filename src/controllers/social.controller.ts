@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { SocialService } from "../daos/services/social.service.js";
-import { createSocialValidations } from "./validations/social.validation.js";
-import { validationResult } from "express-validator";
 
 export class SocialController {
     private service: SocialService;
@@ -31,12 +29,6 @@ export class SocialController {
 
     public async create(req: Request, res: Response): Promise<void> {
         try {
-            await Promise.all(createSocialValidations.map((validation) => validation.run(req)));
-            const errors = validationResult(req);
-            if(!errors.isEmpty()) {
-                res.status(400).json({error: errors.array()});
-                return;
-            }
             const data = req.body;
             const social = await this.service.create(data);
             res.status(200).json(social);
@@ -47,12 +39,6 @@ export class SocialController {
 
     public async update(req: Request, res: Response): Promise<void> {
         try {
-            await Promise.all(createSocialValidations.map((validation) => validation.run(req)));
-            const errors = validationResult(req);
-            if(!errors.isEmpty()) {
-                res.status(400).json({error: errors.array()});
-                return;
-            }
             const { id } = req.params;
             const data = req.body;
 

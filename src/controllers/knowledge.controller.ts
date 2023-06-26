@@ -1,7 +1,4 @@
 import { Request, Response } from "express";
-import { validationResult } from 'express-validator';
-import { createKnowledgeValidations } from "./validations/knowledge.validation.js";
-
 import { KnowledgeService } from "../daos/services/knowledge.service.js";
 import config from "../utils/config.js";
 import fs from "fs";
@@ -36,14 +33,8 @@ export class KnowledgeController {
 
     public async create(req: Request, res: Response): Promise<void> {
         try {
-          await Promise.all(createKnowledgeValidations.map((validation) => validation.run(req)));
-          const errors = validationResult(req);
-      
-          if (!req.file || !errors.isEmpty()) {
-            if (req.file) {
-              fs.unlinkSync(req.file.path);
-            }
-            res.status(400).json({ error: req.file ? errors.array() : "File not found" });
+          if (!req.file) {
+            res.status(400).json({ error: "File not found" });
             return;
           }
       
@@ -69,15 +60,9 @@ export class KnowledgeController {
         try {
             const { id } = req.params;
             const data = req.body;
-            const thumbnail = `${this.URL}${req.file?.filename}`;
-            data.thumbnail = thumbnail;
-
-            await Promise.all(createKnowledgeValidations.map((validation) => validation.run(req)));
-            const errors = validationResult(req);
-            
-            if (!errors.isEmpty()) {
-                res.status(400).json({ error: errors.array() });
-                return;
+            if(req.file) {
+                const thumbnail = `${this.URL}${req.file?.filename}`;
+                data.thumbnail = thumbnail;
             }
 
             let updatedKnowledge;
