@@ -1,15 +1,15 @@
 import fs from "fs";
 import path from "path";
-import ProjectInterface from "../../interfaces/project.interface.js";
-import { CustomError } from "../../utils/customErrors.js";
-import { ProjectRepository } from "../repositories/project.repository.js";
-import { ErrorMessages, ErrorNames } from "./../../enums/project.enum.js";
-import __dirname from "../../utils/utils.js";
+import ProjectInterface from "../interfaces/project.interface.js";
+import { CustomError } from "../utils/customErrors.js";
+import { projectRepository } from "../repositories/index.js";
+import { ErrorMessages, ErrorNames } from "../enums/project.enum.js";
+import __dirname from "../utils/utils.js";
 
 export class ProjectService {
-    private repository: ProjectRepository;
+    private repository: typeof projectRepository;
     constructor(){
-        this.repository = new ProjectRepository();
+        this.repository = projectRepository;
     }
 
     public async getAll(): Promise<ProjectInterface[]> {

@@ -1,13 +1,13 @@
-import { ContactRepository } from "../repositories/contact.repository.js";
-import ContactInterface from "../../interfaces/contact.interface.js";
-import { CustomError } from "../../utils/customErrors.js";
-import { ErrorMessages, ErrorNames } from "../../enums/contact.enum.js";
+import ContactInterface from "../interfaces/contact.interface.js";
+import { CustomError } from "../utils/customErrors.js";
+import { ErrorMessages, ErrorNames } from "../enums/contact.enum.js";
+import { contactRepository } from "../repositories/index.js";
 
 export class ContactService {
-    private repository: ContactRepository;
+    private repository: typeof contactRepository;
 
     constructor(){
-        this.repository = new ContactRepository();
+        this.repository = contactRepository;
     }
 
     public async getAll(): Promise<ContactInterface[]> {

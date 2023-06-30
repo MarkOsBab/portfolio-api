@@ -1,13 +1,13 @@
 import mongoose, { Model } from "mongoose";
-import { KnowledgeModel } from "../models/knowledge.model.js";
 import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
+import { KnowledgeModel } from "../models/knowledge.model.js";
 import { CustomError } from "../../utils/customErrors.js";
-import { ErrorNames, ErrorMessages } from "./../../enums/knowledge.enum.js";
+import { ErrorMessages, ErrorNames } from "../../enums/knowledge.enum.js";
 
-export class KnowledgeRepository {
+export class Knowledge {
     private model: Model<KnowledgeInterface>;
 
-    constructor(){
+    constructor() {
         this.model = KnowledgeModel;
     }
 

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserService } from "../daos/services/user.service.js";
+import { UserService } from "../services/user.service.js";
 import { generateToken, isValidPassword } from "../utils/utils.js";
 
 export class AuthController {

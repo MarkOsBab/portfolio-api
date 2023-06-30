@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { ProjectService } from "../daos/services/project.service.js";
+import { projectService } from "../services/index.js";
 
 import fs from "fs";
 import config from "../utils/config.js";
 
 export class ProjectController {
-    private service: ProjectService;
+    private service: typeof projectService;
     private URL = `${config.publicFolderUrl}`;
     constructor(){
-        this.service = new ProjectService();
+        this.service = projectService;
     }
 
     public async getAll(req: Request, res: Response): Promise<void> {

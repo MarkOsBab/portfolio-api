@@ -1,14 +1,14 @@
-import { UserRepository } from "../repositories/user.repository.js";
-import UserInterface from "../../interfaces/user.interface.js";
-import { CustomError } from "../../utils/customErrors.js";
-import { ErrorMessages, ErrorNames } from "./../../enums/user.enum.js";
-import { createHash, isValidPassword } from "../../utils/utils.js";
+import UserInterface from "../interfaces/user.interface.js";
+import { CustomError } from "../utils/customErrors.js";
+import { ErrorMessages, ErrorNames } from "../enums/user.enum.js";
+import { createHash, isValidPassword } from "../utils/utils.js";
+import { userRepository } from "../repositories/index.js";
 
 export class UserService {
-    private repository: UserRepository;
+    private repository: typeof userRepository;
 
     constructor(){
-        this.repository = new UserRepository();
+        this.repository = userRepository;
     }
 
     public async findById(id: string): Promise<UserInterface | null> {

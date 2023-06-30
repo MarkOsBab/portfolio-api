@@ -1,16 +1,24 @@
-import { UserModel } from "../models/user.model.js";
+import mongoose, { Model } from "mongoose";
 import UserInterface from "../../interfaces/user.interface.js";
-import { Model } from "mongoose";
+import { UserModel } from "../models/user.model.js";
+import { CustomError } from "../../utils/customErrors.js";
+import { ErrorMessages, ErrorNames } from "../../enums/user.enum.js";
 
-export class UserRepository {
+export class User {
     private model: Model<UserInterface>;
 
-    constructor(){
+    constructor() { 
         this.model = UserModel;
     }
 
     public async findById(id: string): Promise<UserInterface | null> {
         try {
+            if(!mongoose.Types.ObjectId.isValid(id)) {
+                CustomError.generateCustomError({
+                    name: ErrorNames.GENERAL_ERROR_NAME,
+                    message: ErrorMessages.ID_NOT_VALID_MESSAGE
+                });
+            }
             return await this.model.findById(id);
         } catch (error: any) {
             throw error;
@@ -48,5 +56,4 @@ export class UserRepository {
             throw error;
         }
     }
-    
 }

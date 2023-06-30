@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { ContactService } from "../daos/services/contact.service.js";
+import { contactService } from "../services/index.js";
 
 export class ContactController {
-    private service: ContactService;
+    private service: typeof contactService;
 
     constructor(){
-        this.service = new ContactService();
+        this.service = contactService;
     }
 
     public async getAll(req: Request, res: Response): Promise<void> {

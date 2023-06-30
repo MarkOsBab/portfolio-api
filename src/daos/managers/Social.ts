@@ -1,13 +1,13 @@
-import { SocialModel } from "../models/social.model.js";
-import Socialinterface from "../../interfaces/social.interface.js";
 import mongoose, { Model } from "mongoose";
+import Socialinterface from "../../interfaces/social.interface.js";
+import { SocialModel } from "../models/social.model.js";
 import { CustomError } from "../../utils/customErrors.js";
-import { ErrorMessages, ErrorNames } from "./../../enums/social.enum.js";
+import { ErrorMessages, ErrorNames } from "../../enums/social.enum.js";
 
-export class SocialRepository {
+export class Social {
     private model: Model<Socialinterface>;
 
-    constructor(){
+    constructor() {
         this.model = SocialModel;
     }
 

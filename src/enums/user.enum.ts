@@ -8,7 +8,8 @@ const ErrorMessages: Record<string, string> = {
     EMAIL_ALREADY_REGISTRED: "The email is already registred",
     USERNAME_ALREADY_REGISTRED: "The username is already registred",
     NOT_FOUND_MESSAGE: "User not found",
-    INVALID_CREDENTIALS_MESSAGE: "Credentials not valid"
+    INVALID_CREDENTIALS_MESSAGE: "Credentials not valid",
+    ID_NOT_VALID_MESSAGE: "The ID is not valid",
 }
 
 export { ErrorNames, ErrorMessages };

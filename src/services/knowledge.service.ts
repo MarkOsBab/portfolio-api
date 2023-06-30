@@ -1,16 +1,16 @@
 import path from "path";
-import KnowledgeInterface from "../../interfaces/knowledge.interface.js";
-import { CustomError } from "../../utils/customErrors.js";
-import { KnowledgeRepository } from "../repositories/knowledge.repository.js";
-import { ErrorNames, ErrorMessages } from "./../../enums/knowledge.enum.js";
+import KnowledgeInterface from "../interfaces/knowledge.interface.js";
+import { CustomError } from "../utils/customErrors.js";
+import { knowledgeRepository } from "../repositories/index.js";
+import { ErrorNames, ErrorMessages } from "../enums/knowledge.enum.js";
 import fs from "fs";
-import __dirname from "../../utils/utils.js";
+import __dirname from "../utils/utils.js";
 
 export class KnowledgeService {
-    private repository: KnowledgeRepository;
+    private repository: typeof knowledgeRepository;
 
     constructor(){
-        this.repository = new KnowledgeRepository();
+        this.repository = knowledgeRepository;
     }
 
     public async getAll(category?: string): Promise<KnowledgeInterface[]> {

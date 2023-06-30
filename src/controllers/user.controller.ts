@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { UserService } from "../daos/services/user.service.js";
 import { generateToken } from "../utils/utils.js";
+import { userService } from "../services/index.js";
 
 export class UserController {
-    private service: UserService;
+    private service: typeof userService;
     private tokenExpiresIn: string = "1d";
 
     constructor(){
-        this.service = new UserService();
+        this.service = userService;
     }
 
     public async create(req: Request, res: Response): Promise<void> {

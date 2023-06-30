@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { KnowledgeService } from "../daos/services/knowledge.service.js";
+import { knowledgeService } from "../services/index.js";
 import config from "../utils/config.js";
 import fs from "fs";
 
 export class KnowledgeController {
-    private service: KnowledgeService;
+    private service: typeof knowledgeService;
     private URL = `${config.publicFolderUrl}`;
 
     constructor(){
-        this.service = new KnowledgeService();
+        this.service = knowledgeService;
     }
 
     public async getAll(req: Request, res: Response): Promise<void> {

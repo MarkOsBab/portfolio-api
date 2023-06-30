@@ -1,13 +1,13 @@
-import { SocialRepository } from "../repositories/social.repository.js";
-import Socialinterface from "../../interfaces/social.interface.js";
-import { CustomError } from "../../utils/customErrors.js";
-import { ErrorMessages, ErrorNames } from "./../../enums/social.enum.js";
+import { socialRepository } from "../repositories/index.js";
+import Socialinterface from "../interfaces/social.interface.js";
+import { CustomError } from "../utils/customErrors.js";
+import { ErrorMessages, ErrorNames } from "../enums/social.enum.js";
 
 export class SocialService {
-    private repository: SocialRepository;
+    private repository: typeof socialRepository;
 
     constructor(){
-        this.repository = new SocialRepository();
+        this.repository = socialRepository;
     }
 
     public async getAll(): Promise<Socialinterface[]> {

@@ -1,13 +1,13 @@
-import { ContactModel } from "../models/contact.model.js";
-import ContactInterface from "../../interfaces/contact.interface.js";
 import mongoose, { Model } from "mongoose";
+import ContactInterface from "../../interfaces/contact.interface.js";
+import { ContactModel } from "../models/contact.model.js";
 import { CustomError } from "../../utils/customErrors.js";
 import { ErrorMessages, ErrorNames } from "../../enums/contact.enum.js";
 
-export class ContactRepository {
-    private model:Model<ContactInterface>;
+export class Contact {
+    private model: Model<ContactInterface>;
 
-    constructor(){
+    constructor() {
         this.model = ContactModel;
     }
 

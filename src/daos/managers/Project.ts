@@ -1,13 +1,13 @@
 import mongoose, { Model } from "mongoose";
-import { ProjectModel } from "../models/project.model.js";
 import ProjectInterface from "../../interfaces/project.interface.js";
+import { ProjectModel } from "../models/project.model.js";
 import { CustomError } from "../../utils/customErrors.js";
-import { ErrorMessages, ErrorNames } from "./../../enums/project.enum.js";
+import { ErrorMessages, ErrorNames } from "../../enums/project.enum.js";
 
-export class ProjectRepository {
+export class Project {
     private model: Model<ProjectInterface>;
-
-    constructor(){
+    
+    constructor() {
         this.model = ProjectModel;
     }
 
