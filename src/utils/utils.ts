@@ -4,7 +4,6 @@ import path, { dirname } from "path";
 import bcrypt from "bcrypt";
 import {v4 as uuid} from "uuid";
 import jwt, { Secret } from "jsonwebtoken";
-import secretKey from './config.js';
 import UserInterface from '../interfaces/user.interface.js';
 import config from './config.js';
 

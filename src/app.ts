@@ -12,6 +12,7 @@ import projectRouter from "./routers/project.router.js";
 import socialRouter from "./routers/social.router.js";
 import userRouter from "./routers/user.router.js";
 import authRouter from "./routers/auth.router.js";
+import contactRouter from "./routers/contact.router.js";
 
 const app = express();
 
@@ -31,3 +32,4 @@ app.use("/api/projects", projectRouter);
 app.use("/api/socials", socialRouter);
 app.use("/api/users", userRouter);
 app.use("/api/auth/", authRouter);
+app.use("/api/contacts", contactRouter);
