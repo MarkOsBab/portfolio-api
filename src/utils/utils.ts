@@ -33,3 +33,8 @@ export const generateToken = (user: UserInterface, expiresIn: string) => {
   const token = jwt.sign({ user }, config.secretKey as Secret, { expiresIn });
   return token;
 } 
+
+export const generateUUID = () => {
+  const token: string = uuid();
+  return token;
+}

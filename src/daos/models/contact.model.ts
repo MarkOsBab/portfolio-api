@@ -3,6 +3,14 @@ import ContactInterface from "../../interfaces/contact.interface.js";
 
 const contactCollection = "contacts";
 const contactSchema = new mongoose.Schema({
+    firstname: {
+        type: String,
+        required: true,
+    },
+    lastname: {
+        type: String,
+        required: false,
+    },
     email: {
         type: String,
         required: true,

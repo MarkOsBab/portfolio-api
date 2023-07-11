@@ -32,4 +32,20 @@ export class Contact {
             throw error;
         }
     }
+
+    public async create(contact: ContactInterface): Promise<ContactInterface> {
+        try {
+            return await this.model.create(contact);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async getIfNotAnswered(email: string): Promise<ContactInterface | null> {
+        try {
+            return await this.model.findOne({email, was_answered: false});
+        } catch (error) {
+            throw error;
+        }
+    }
 }

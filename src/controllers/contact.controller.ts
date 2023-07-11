@@ -27,4 +27,20 @@ export class ContactController {
             res.status(500).json({error: error.message});
         }
     }
+
+    public async create(req: Request, res: Response): Promise<void> {
+        try {
+            const { firstname, lastname, email, message } = req.body;
+            
+            const data = {
+                firstname, lastname, email, message
+            };
+
+            const contact = await this.service.create(data);
+
+            res.status(200).json(contact);
+        } catch (error: any) {
+            res.status(500).json({error: error.message});
+        }
+    }
 }

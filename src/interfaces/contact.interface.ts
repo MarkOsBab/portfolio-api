@@ -1,8 +1,10 @@
 interface ContactInterface {
-    email: String,
-    message: String,
-    code: String,
-    was_answered?: Boolean,
+    firstname: string,
+    lastname?: string,
+    email: string,
+    message: string,
+    code?: string,
+    was_answered?: boolean,
 };
 
 export default ContactInterface;

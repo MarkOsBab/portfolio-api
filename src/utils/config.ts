@@ -9,6 +9,8 @@ const config: ConfigInterface = {
     appDebug: !!process.env.APP_DEBUG,
     publicFolderUrl: process.env.PUBLIC_FOLDER_URL,
     secretKey: process.env.SECRET_KEY,
+    mailEmail: process.env.MAIL_EMAIL,
+    mailPassword: process.env.MAIL_PASSWORD,
 };
 
 export default config;
