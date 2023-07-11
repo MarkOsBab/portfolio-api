@@ -10,7 +10,10 @@ export class ContactController {
 
     public async getAll(req: Request, res: Response): Promise<void> {
         try {
-            const contacts = await this.service.getAll();
+            const { was_answered } = req.query;
+            console.log(was_answered);
+            
+            const contacts = await this.service.getAll(was_answered as string | undefined);
             res.status(200).json(contacts);
         } catch (error: any) {
             res.status(500).json({error: error.message});

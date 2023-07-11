@@ -29,6 +29,14 @@ const contactSchema = new mongoose.Schema({
         enum: [0, 1],
         required: false,
         default: 0,
+    },
+    created_at: {
+        type: Date,
+        required: true,
+    },
+    updated_at: {
+        type: Date,
+        require: true,
     }
 });
 

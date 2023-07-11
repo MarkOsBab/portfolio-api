@@ -8,9 +8,9 @@ export class ContactRepository {
         this.manager = contact;
     }
 
-    public async getAll(): Promise<ContactInterface[]> {
+    public async getAll(was_answered?: string): Promise<ContactInterface[]> {
         try {
-            return await this.manager.getAll();
+            return await this.manager.getAll(was_answered);
         } catch (error: any) {
             throw error;
         }

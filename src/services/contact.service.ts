@@ -13,9 +13,9 @@ export class ContactService {
         this.repository = contactRepository;
     }
 
-    public async getAll(): Promise<ContactInterface[]> {
+    public async getAll(was_answered?: string): Promise<ContactInterface[]> {
         try {
-            return await this.repository.getAll();
+            return await this.repository.getAll(was_answered);
         } catch (error: any) {
             throw new Error(error);
         }

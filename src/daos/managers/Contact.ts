@@ -11,11 +11,11 @@ export class Contact {
         this.model = ContactModel;
     }
 
-    public async getAll(): Promise<ContactInterface[]> {
+    public async getAll(was_answered?: string): Promise<ContactInterface[]> {
         try {
-            return await this.model.find();
+            return await this.model.find({was_answered});
         } catch (error: any) {
-            throw error;
+            throw error;   
         }
     }
 
